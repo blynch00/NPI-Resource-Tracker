@@ -1,7 +1,6 @@
-import os
 import pandas
 from pandas.io.parsers.readers import TextFileReader
-from config import DEFAULT_HEADERS, NEW_HEADERS, FILE_NAME
+from .config import DEFAULT_HEADERS, NEW_HEADERS
 
 
                             # Each chunk is an individual DataFrame
@@ -15,7 +14,6 @@ def transform_npi_data(data_frame:pandas.DataFrame) -> pandas.DataFrame:
         data_frame = data_frame.drop_duplicates(subset=["NPI"])
     except Exception as error_msg:
         raise error_msg
-       #chunk.to_csv(FILE_NAME, index=False, mode = 'a', header =  (i==0))
     print(data_frame.head(100))
     return data_frame
 

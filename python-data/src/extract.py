@@ -1,7 +1,7 @@
 import pandas
 # Found as return object type when returning read_csv with chunk limit.
 from pandas.io.parsers.readers import TextFileReader
-from config import NEW_HEADERS, FILE_NAME
+from .config import NEW_HEADERS, NEW_FILE_NAME
 import os
 
 
@@ -11,13 +11,13 @@ def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFil
     into memory would crash, as the base file is 11gb in size. 
     '''
     # Check if file already exists, deleting it if so
-    if os.path.exists(FILE_NAME):
+    if os.path.exists(NEW_FILE_NAME):
         try:
-            os.remove(FILE_NAME)
+            os.remove(NEW_FILE_NAME)
         # if failed, continue execution; transform.py and MySQL have validation catches.
-        except Exception:
-            print(f"File deletion error.")
-            pass
+        except Exception as e:
+            raise Exception(f"Error deleting file {NEW_FILE_NAME}: {e}")
+            
 
     # Read csv into memory, in limited chunks
     data_iterator= pandas.read_csv(

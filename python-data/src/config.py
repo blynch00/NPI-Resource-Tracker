@@ -1,6 +1,6 @@
 # Used to store list definitions for header structs
 
-FILE_NAME = "new_npi.csv"
+NEW_FILE_NAME = "../data/new_npi.csv"
 DEFAULT_HEADERS =  {
     "First Name": "N/A", 
     "Last Name": "N/A", 
@@ -25,3 +25,4 @@ NEW_HEADERS = [
     "Taxonomy Code"
     ]
 
+DEFAULT_DATA_PATH = "../data/npi_data.csv"

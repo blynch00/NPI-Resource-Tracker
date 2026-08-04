@@ -1,7 +1,7 @@
-from config import FILE_NAME, DEFAULT_HEADERS, NEW_HEADERS, DEFAULT_DATA_PATH
-from extract import return_npi_csv
-from transform import transform_npi_data
-from load import load_npi_data
+from src.config import NEW_FILE_NAME, DEFAULT_DATA_PATH
+from src.extract import return_npi_csv
+from src.transform import transform_npi_data
+from src.load import load_npi_data
 import os
 import pathlib
 from pandas.io.parsers.readers import TextFileReader
@@ -9,7 +9,7 @@ from pandas.io.parsers.readers import TextFileReader
 import sys
 
 
-def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=FILE_NAME) -> None:
+def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=NEW_FILE_NAME) -> None:
     '''
     
 
@@ -47,7 +47,7 @@ def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=FILE_NAME) -> None:
 def main(arguments:list=sys.argv) -> None:
 
     if len(arguments) < 3:
-        print(f"Not enough parameters given. Will be defaulting to {DEFAULT_DATA_PATH} > {FILE_NAME}")
+        print(f"Not enough parameters given. Will be defaulting to {DEFAULT_DATA_PATH} > {NEW_FILE_NAME}")
         etl_helper()
     else:
         etl_helper(arguments[1], arguments[2])
