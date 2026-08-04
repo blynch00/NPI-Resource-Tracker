@@ -15,8 +15,8 @@ def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFil
         try:
             os.remove(NEW_FILE_NAME)
         # if failed, continue execution; transform.py and MySQL have validation catches.
-        except Exception as e:
-            raise Exception(f"Error deleting file {NEW_FILE_NAME}: {e}")
+        except Exception as error_msg:
+            raise Exception(f"Error deleting file {NEW_FILE_NAME}: {error_msg}")
             
 
     # Read csv into memory, in limited chunks

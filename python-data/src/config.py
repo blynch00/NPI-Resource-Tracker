@@ -1,6 +1,9 @@
-# Used to store list definitions for header structs
+# Used to store static definitions for file pathing & headers for pandas dataframes.
 
 NEW_FILE_NAME = "../data/new_npi.csv"
+DEFAULT_DATA_PATH = "../data/npi_data.csv"
+
+
 DEFAULT_HEADERS =  {
     "First Name": "N/A", 
     "Last Name": "N/A", 
@@ -25,4 +28,3 @@ NEW_HEADERS = [
     "Taxonomy Code"
     ]
 
-DEFAULT_DATA_PATH = "../data/npi_data.csv"

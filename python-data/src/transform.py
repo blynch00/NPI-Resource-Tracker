@@ -1,5 +1,4 @@
 import pandas
-from pandas.io.parsers.readers import TextFileReader
 from .config import DEFAULT_HEADERS, NEW_HEADERS
 
 

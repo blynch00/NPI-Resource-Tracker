@@ -10,7 +10,7 @@ def load_npi_data(chunk:pandas.DataFrame, index:int=0, path_name=NEW_FILE_NAME) 
         else:
             added_headers = False
         chunk.to_csv(path_name, index=False, mode = 'a', header = added_headers)
-    except Exception as e:
-        raise ValueError(f"ERROR: {e}")
+    except Exception as error_msg:
+        raise ValueError(f"ERROR: {error_msg}")
     
     return added_lines
