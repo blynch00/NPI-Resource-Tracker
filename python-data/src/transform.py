@@ -1,5 +1,5 @@
 import pandas
-from .config import DEFAULT_HEADERS, NEW_HEADERS
+from .config import DEFAULT_HEADERS, NEW_HEADERS, SQL_TABLE_NAMES
 
 
                             # Each chunk is an individual DataFrame
@@ -9,8 +9,12 @@ def transform_npi_data(data_frame:pandas.DataFrame) -> pandas.DataFrame:
     '''
     try: 
         data_frame = data_frame.dropna(subset=['NPI'])
-        data_frame = data_frame.fillna(value=DEFAULT_HEADERS)
         data_frame = data_frame.drop_duplicates(subset=["NPI"])
+        data_frame['Address'] = data_frame['Address 1'] + data_frame['Address 2'] + data_frame['City']
+        data_frame = data_frame['Address'].astype(str)
+        data_frame.drop(columns=['Address 1', 'Address 2', 'City'], inplace=True)
+        data_frame.rename(columns={SQL_TABLE_NAMES}, errors='raise', inplace=True)
+        data_frame = data_frame.fillna(value=DEFAULT_HEADERS)
     except Exception as error_msg:
         raise error_msg
     #print(data_frame.head(100))

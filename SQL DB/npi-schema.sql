@@ -35,21 +35,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `npi_database`.`providers` (
   `npi_code` CHAR(10) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(50) NOT NULL,
+  `first_name` VARCHAR(50) NOT NULL,
   `state` CHAR(2) NOT NULL,
-  `address` VARCHAR(145) NOT NULL,
+  `address` VARCHAR(150) NOT NULL,
   `zip` CHAR(5) NOT NULL,
   `phone` CHAR(10) NULL DEFAULT NULL,
-  `taxonomy_id` CHAR(10) NOT NULL,
+  `taxonomy_code` CHAR(10) NOT NULL,
   PRIMARY KEY (`npi_code`),
-  UNIQUE INDEX `npi_code_UNIQUE` (`npi_code` ASC) VISIBLE,
-  INDEX `tax_id_idx` (`taxonomy_id` ASC) VISIBLE,
-  CONSTRAINT `tax_id`
-    FOREIGN KEY (`taxonomy_id`)
-    REFERENCES `npi_database`.`taxonomies` (`taxonomy_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `npi_code_UNIQUE` (`npi_code` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

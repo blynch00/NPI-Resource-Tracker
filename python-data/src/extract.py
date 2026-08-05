@@ -1,9 +1,9 @@
 import pandas
 # Found as return object type when returning read_csv with chunk limit.
 from pandas.io.parsers.readers import TextFileReader
-from .config import NEW_HEADERS, NEW_FILE_NAME
+from .config import NEW_HEADERS, NEW_FILE_NAME, DATA_CASTS
 import os
-
+from sqlalchemy import types
 
 def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFileReader:
     '''
@@ -28,7 +28,7 @@ def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFil
         header = None,
         names = new_headers,
         # Cast integer values to string during intial read
-        dtype = {"NPI":str, "Zip Code": str, "Phone Number": str},
+        dtype = {DATA_CASTS},
         chunksize = 500000,
         usecols = [0,5,6,20,21,22,23,24,26,47]
         ) 
