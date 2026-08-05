@@ -1,7 +1,7 @@
 import pandas
 from .config import NEW_FILE_NAME
 
-def load_npi_data(chunk:pandas.DataFrame, index:int=0, path_name=NEW_FILE_NAME) -> int:
+def load_npi_data(chunk, index=0, path_name=NEW_FILE_NAME):
 
     added_lines = len(chunk)
     try:

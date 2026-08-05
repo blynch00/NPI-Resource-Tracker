@@ -22,7 +22,7 @@ def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=NEW_FILE_NAME) -> N
         # Get the end of the path as a lower string, then compare
         path_end = pathlib.Path(file_path).suffix.lower()
         # If incorrect file type, raise error
-        if path_end != "csv":
+        if path_end != ".csv":
             raise ValueError(f"Error: Incorrect File Type Given: {path_end}")
 
     # Check if new_data path exists, and delete it if so.
@@ -39,6 +39,7 @@ def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=NEW_FILE_NAME) -> N
     for index, chunk in enumerate(data):
         chunk = transform_npi_data(chunk)
         total_written += load_npi_data(chunk, index, new_data)
+        print(f"Iteration: {index}. {total_written} lines added.")
     print(f"=============  {total_written} lines written to file. =============")
 
     return None
@@ -49,7 +50,7 @@ def main(arguments:list=sys.argv) -> None:
     main function; calls etl_helper after checking command arguments.
     '''
     if len(arguments) < 3:
-        print(f"Not enough parameters given. Will be defaulting to {DEFAULT_DATA_PATH} > {NEW_FILE_NAME}")
+        print(f"ERROR: Correct parameters not used. Please call from command line as 'python3 main.py input output'")
         etl_helper()
     else:
         etl_helper(arguments[1], arguments[2])

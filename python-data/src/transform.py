@@ -13,7 +13,7 @@ def transform_npi_data(data_frame:pandas.DataFrame) -> pandas.DataFrame:
         data_frame = data_frame.drop_duplicates(subset=["NPI"])
     except Exception as error_msg:
         raise error_msg
-    print(data_frame.head(100))
+    #print(data_frame.head(100))
     return data_frame
 
 if __name__ == '__main__':
