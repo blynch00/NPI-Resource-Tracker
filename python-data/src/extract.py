@@ -1,7 +1,7 @@
 import pandas
 # Found as return object type when returning read_csv with chunk limit.
 from pandas.io.parsers.readers import TextFileReader
-from .config import NEW_HEADERS, NEW_FILE_NAME, DATA_CASTS
+from .config import NEW_HEADERS, NEW_FILE_NAME, EXTRACTION_TYPES
 import os
 from sqlalchemy import types
 
@@ -10,15 +10,14 @@ def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFil
     Returns csv contents, as an iterator of type 'TextFileReader'; loading the entire file 
     into memory would crash, as the base file is 11gb in size. 
     '''
-    # Check if file already exists, deleting it if so
+    # Check if file already exists, deleting it if so; main.py should have renamed previous file if exists
     if os.path.exists(NEW_FILE_NAME):
         try:
             os.remove(NEW_FILE_NAME)
         # if failed, continue execution; transform.py and MySQL have validation catches.
         except Exception as error_msg:
-            raise Exception(f"Error deleting file {NEW_FILE_NAME}: {error_msg}")
+            raise error_msg
             
-
     # Read csv into memory, in limited chunks
     data_iterator= pandas.read_csv(
         file_path,
@@ -28,7 +27,7 @@ def return_npi_csv(file_path="npi_data.csv", new_headers=NEW_HEADERS) -> TextFil
         header = None,
         names = new_headers,
         # Cast integer values to string during intial read
-        dtype = {DATA_CASTS},
+        dtype=EXTRACTION_TYPES,
         chunksize = 500000,
         usecols = [0,5,6,20,21,22,23,24,26,47]
         ) 

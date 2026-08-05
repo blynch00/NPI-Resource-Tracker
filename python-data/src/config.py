@@ -25,27 +25,27 @@ DATA_CASTS = {
     "taxonomy_code": types.CHAR(10)
 }
 
-SQL_TABLE_NAMES = {
-    "NPI": "npi_code",
-    "First Name": "first_name",
-    "Last Name": "last_name",
-    "State": "state",
-    "Address": "address",
-    "Zip Code": "zip",
-    "Phone Number": "phone",
-    "Taxonomy Code": "taxonomy_code"
-}
-
 NEW_HEADERS = [
-    "NPI", 
-    "First Name", 
-    "Last Name", 
-    "Address 1", 
-    "Address 2", 
-    "City", 
-    "State", 
-    "Zip Code",
-    "Phone Number", 
-    "Taxonomy Code"
+    "npi_code", 
+    "first_name", 
+    "last_name", 
+    "address_1", 
+    "address_2",
+    "state", 
+    "zip", 
+    "phone", 
+    "taxonomy_code"
     ]
 
+EXTRACTION_TYPES = {
+    "npi_code": str, 
+    "first_name": str, 
+    "last_name": str, 
+    "address_1": str, 
+    "address_2": str,
+    "state": str, 
+    "zip" : str, 
+    "phone" : str, 
+    "taxonomy_code" : str
+
+}

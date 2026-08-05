@@ -1,19 +1,24 @@
 import pandas
-from .config import DEFAULT_HEADERS, NEW_HEADERS, SQL_TABLE_NAMES
+from .config import DEFAULT_HEADERS, NEW_HEADERS
 
 
                             # Each chunk is an individual DataFrame
 def transform_npi_data(data_frame:pandas.DataFrame) -> pandas.DataFrame:
     '''
-    Given chunks of data from extract.py, perform data validation in DataFrame, then give to load.py to load into SQL DB.
+    Takes smaller pd dataframe chunks given from the chunk iterator, and cleans/validates
+    data. Returns dataframe to be inserted into SQL/CSV file.
     '''
     try: 
-        data_frame = data_frame.dropna(subset=['NPI'])
-        data_frame = data_frame.drop_duplicates(subset=["NPI"])
-        data_frame['Address'] = data_frame['Address 1'] + data_frame['Address 2'] + data_frame['City']
-        data_frame = data_frame['Address'].astype(str)
-        data_frame.drop(columns=['Address 1', 'Address 2', 'City'], inplace=True)
-        data_frame.rename(columns={SQL_TABLE_NAMES}, errors='raise', inplace=True)
+        # drop any rows without an NPI number, as NPI is primary key in SQL table.
+        data_frame = data_frame.dropna(subset=['npi_code'])
+        # drop any duplicate numbers
+        data_frame = data_frame.drop_duplicates(subset=["npi_code"])
+        # Concatenate address_1 and address_2 into a single value
+        data_frame['address'] = data_frame['address_1'] + data_frame['address_2']
+        # Cast new address as str, then drop the columns used to create the new column.
+        data_frame = data_frame['address'].astype(str)
+        data_frame.drop(columns=['address_1', 'address_2'], inplace=True)
+        # Fill any missing values with default headers, defined in config.py
         data_frame = data_frame.fillna(value=DEFAULT_HEADERS)
     except Exception as error_msg:
         raise error_msg
