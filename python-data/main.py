@@ -39,9 +39,13 @@ def etl_helper(file_path:str=DEFAULT_DATA_PATH, new_data:str=NEW_FILE_NAME, engi
     # Call extract to retrieve FileIterator
     data = return_npi_csv(file_path)
     total_written  = 0
+    print("Returned from extract")
     # index can be passed to load_npi_data to initially insert headers into CSV
     for index, chunk in enumerate(data):
+        print(f"index: {index}")
+        #chunk = chunk.iloc[:, [0,5,6,20,21,22,23,24,26,47]]
         #call transform.py
+        print(f"Calling transform on {index}th chunk")
         chunk = transform_npi_data(chunk)
         # Increase count by # of SQL lines written
         total_written += load_npi_data(chunk, index, new_data, engine, table_name)

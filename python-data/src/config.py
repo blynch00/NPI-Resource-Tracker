@@ -27,25 +27,13 @@ DATA_CASTS = {
 
 NEW_HEADERS = [
     "npi_code", 
-    "first_name", 
     "last_name", 
+    "first_name", 
     "address_1", 
     "address_2",
+    "city",
     "state", 
     "zip", 
     "phone", 
     "taxonomy_code"
     ]
-
-EXTRACTION_TYPES = {
-    "npi_code": str, 
-    "first_name": str, 
-    "last_name": str, 
-    "address_1": str, 
-    "address_2": str,
-    "state": str, 
-    "zip" : str, 
-    "phone" : str, 
-    "taxonomy_code" : str
-
-}
