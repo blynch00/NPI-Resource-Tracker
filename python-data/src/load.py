@@ -2,7 +2,8 @@ import pandas
 from sqlalchemy import types
 from .config import NEW_FILE_NAME, DATA_CASTS
 
-def load_npi_data(chunk, index=0, path_name=NEW_FILE_NAME, engine=None, table_name='providers') -> int:
+
+def load_npi_data(chunk:pandas.DataFrame, index=0, path_name=NEW_FILE_NAME, engine=None, table_name='providers') -> int:
     '''
     Responsible for loading transformed columns into SQL table & csv file. If SQLAlchemy
     engine is None, only the csv file is written to.
@@ -27,6 +28,7 @@ def load_npi_data(chunk, index=0, path_name=NEW_FILE_NAME, engine=None, table_na
                 if_exists='append',
                 # method='multi' used to make inserts more efficient
                 method="multi",
+                chunksize=5_000,
                 index=False
                 )
     # If the SQL table should be written to, but to_sql returned 0, ValueError is raised,
@@ -34,7 +36,7 @@ def load_npi_data(chunk, index=0, path_name=NEW_FILE_NAME, engine=None, table_na
                 raise ValueError(f"ERROR: No rows were added to SQL DB.")
         # Write to csv; append header if first chunk, and append otherwise.
         chunk.to_csv(path_name, index=False, mode = 'a', header = added_headers)
-    except Exception as error_msg:
-        raise ValueError(f"ERROR: {error_msg}")
+    except Exception:
+        print("rip")
     
     return added_lines

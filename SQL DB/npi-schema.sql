@@ -5,89 +5,86 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
 -- Schema npi_database
--- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Schema npi_database
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `npi_database` DEFAULT CHARACTER SET utf8 ;
-USE `npi_database` ;
+DROP DATABASE IF EXISTS `npi_database`;
 
--- -----------------------------------------------------
+CREATE DATABASE `npi_database`
+DEFAULT CHARACTER SET utf8;
+
+USE `npi_database`;
+
 -- Table `npi_database`.`taxonomies`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `npi_database`.`taxonomies` (
-  `taxonomy_id` CHAR(10) NOT NULL,
-  `groupings` VARCHAR(150) NOT NULL,
-  `classifications` VARCHAR(150) NOT NULL,
-  `specializations` VARCHAR(150) NULL DEFAULT NULL,
-  PRIMARY KEY (`taxonomy_id`),
-  UNIQUE INDEX `taxonomy_id_UNIQUE` (`taxonomy_id` ASC) VISIBLE)
+
+CREATE TABLE `taxonomies` (
+    `taxonomy_id` CHAR(10) NOT NULL,
+    `groupings` VARCHAR(150) NOT NULL,
+    `classifications` VARCHAR(150) NOT NULL,
+    `specializations` VARCHAR(150) NULL DEFAULT NULL,
+    PRIMARY KEY (`taxonomy_id`),
+    UNIQUE INDEX `taxonomy_id_UNIQUE` (`taxonomy_id` ASC) VISIBLE
+)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
 -- Table `npi_database`.`providers`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `npi_database`.`providers` (
-  `npi_code` CHAR(10) NOT NULL,
-  `last_name` VARCHAR(50) NOT NULL,
-  `first_name` VARCHAR(50) NOT NULL,
-  `state` CHAR(2) NOT NULL,
-  `address` VARCHAR(150) NOT NULL,
-  `zip` CHAR(5) NOT NULL,
-  `phone` CHAR(10) NULL DEFAULT NULL,
-  `taxonomy_code` CHAR(10) NOT NULL,
-  PRIMARY KEY (`npi_code`),
-  UNIQUE INDEX `npi_code_UNIQUE` (`npi_code` ASC) VISIBLE)
+
+CREATE TABLE `providers` (
+    `npi_code` CHAR(10) NOT NULL,
+    `last_name` VARCHAR(150) NOT NULL,
+    `first_name` VARCHAR(150) NOT NULL,
+    `address_1` VARCHAR(150) NOT NULL,
+    `address_2` VARCHAR(150) NOT NULL,
+    `city` VARCHAR(150) NOT NULL,
+    `state` VARCHAR(150) NOT NULL,
+    `zip` VARCHAR(150) NOT NULL,
+    `phone` VARCHAR(150) NULL,
+    `taxonomy_code` VARCHAR(150) NOT NULL,
+    PRIMARY KEY (`npi_code`),
+    UNIQUE INDEX `npi_code_UNIQUE` (`npi_code` ASC) VISIBLE
+)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
 -- Table `npi_database`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `npi_database`.`users` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `password_info` VARCHAR(45) NULL DEFAULT NULL,
-  `user_email` VARCHAR(145) NOT NULL,
-  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
-  UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE)
+
+CREATE TABLE `users` (
+    `user_id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(45) NOT NULL,
+    `password_info` VARCHAR(45) NULL DEFAULT NULL,
+    `user_email` VARCHAR(145) NOT NULL,
+    `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`),
+    UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
+    UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
+    UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE
+)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
 -- Table `npi_database`.`favorites`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `npi_database`.`favorites` (
-  `favorite_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `npi_code` CHAR(10) NOT NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`favorite_id`),
-  UNIQUE INDEX `favorite_id_UNIQUE` (`favorite_id` ASC) VISIBLE,
-  INDEX `user_idx` (`user_id` ASC) VISIBLE,
-  INDEX `provider_idx` (`npi_code` ASC) VISIBLE,
-  CONSTRAINT `user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `npi_database`.`users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `provider`
-    FOREIGN KEY (`npi_code`)
-    REFERENCES `npi_database`.`providers` (`npi_code`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+
+CREATE TABLE `favorites` (
+    `favorite_id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `npi_code` CHAR(10) NOT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`favorite_id`),
+    UNIQUE INDEX `favorite_id_UNIQUE` (`favorite_id` ASC) VISIBLE,
+    INDEX `user_idx` (`user_id` ASC) VISIBLE,
+    INDEX `provider_idx` (`npi_code` ASC) VISIBLE,
+
+    CONSTRAINT `user`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`user_id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+
+    CONSTRAINT `provider`
+        FOREIGN KEY (`npi_code`)
+        REFERENCES `providers` (`npi_code`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

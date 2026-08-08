@@ -1,7 +1,7 @@
 import pandas
 # Found as return object type when returning read_csv with chunk limit.
 from pandas.io.parsers.readers import TextFileReader
-from .config import NEW_HEADERS, NEW_FILE_NAME
+from .config import NEW_FILE_NAME
 import os
 from sqlalchemy import types
 NEW_HEADERS = [
@@ -16,7 +16,6 @@ NEW_HEADERS = [
     "phone", 
     "taxonomy_code"
     ]
-column_select= [0, 5, 6, 20, 21, 22, 23, 24, 26, 47]
 
 def return_npi_csv(file_path="npi_data.csv") -> TextFileReader:
     '''
@@ -30,13 +29,10 @@ def return_npi_csv(file_path="npi_data.csv") -> TextFileReader:
         # if failed, continue execution; transform.py and MySQL have validation catches.
         except Exception as error_msg:
             raise error_msg
-    print("NOT HERE")
     # Read csv into memory, in limited chunks
-    data_iterator= pandas.read_csv(file_path, skiprows=1, header = None,usecols=column_select,names=NEW_HEADERS, chunksize = 50, sep=',') #usecols = [0,5,6,20,21,22,23,24,26,47])#, 
-    
-        
-        
-    print("OR HERE")
+    data_iterator= pandas.read_csv(file_path, skiprows=1, header = None, names=NEW_HEADERS, chunksize = 500000, sep=',', usecols=[0, 5, 6, 20, 21, 22, 23, 24, 26, 47], dtype='string')
+
+    # Return TextFileReader
     return data_iterator
 
 if __name__ == '__main__':
