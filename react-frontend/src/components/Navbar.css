@@ -1,0 +1,28 @@
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 64px;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+
+
+.navbar-link {
+    position: relative;
+    padding: 0.5rem 0;
+    color: #fefefe;
+    font-size: 1.3rem;
+    font-weight: 650;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* Simple hover effect */
+.navbar-link:hover {
+    color: #000000;
+}
+
