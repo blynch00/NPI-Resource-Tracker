@@ -1,7 +1,8 @@
+
 export function UserPage(){
     return (
-        <div className="container">
-            <h1>This is the User Page.</h1>
+        <div className="page-header">
+            <h1>Account Page.</h1>
         </div>
     )
 }
