@@ -49,9 +49,10 @@ ENGINE = InnoDB;
 
 CREATE TABLE `users` (
     `user_id` INT NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(45) NOT NULL,
-    `password_info` VARCHAR(45) NULL DEFAULT NULL,
-    `user_email` VARCHAR(145) NOT NULL,
+    `google_id` VARCHAR(50) NOT NULL
+    `username` VARCHAR(50) NOT NULL,
+    `password_info` VARCHAR(50) NULL DEFAULT NULL,
+    `user_email` VARCHAR(150) NOT NULL,
     `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`user_id`),
     UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,

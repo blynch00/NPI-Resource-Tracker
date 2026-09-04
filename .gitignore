@@ -6,3 +6,5 @@ NPPES_Data_Dissemination_July_2026_V2/
 **/__pycache__/**
 *.py[cod]
 **/NPPES_Data_Dissemination_July_2026_V2.zip
+**/node_modules/**
+**/.DS_Store

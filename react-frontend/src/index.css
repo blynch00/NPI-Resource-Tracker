@@ -216,7 +216,17 @@ tbody tr:hover td {
 }
 
 
-
+.general-text {
+    background-color: #fefefe;
+    border: none;
+    font-size: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+    
+}
 
 
 /* 
