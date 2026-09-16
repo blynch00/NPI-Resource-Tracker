@@ -13,10 +13,10 @@ function App() {
             <HRouter>
                 <Routes>
                     <Route element = {<Layout/>}>
+                        <Route path='/About' element={<AboutPage/>}/>
                         <Route path="/NumberLookup" element={<NumberLookup/>}/>
                         <Route path="/StoredNumbers" element={<StoredNumbers/>}/>
                         <Route path="/UserPage" element={<UserPage/>}/>
-                        <Route path='/About' element={<AboutPage/>}/>
                     </Route>
                     
                 </Routes>

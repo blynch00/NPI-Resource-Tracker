@@ -1,5 +1,6 @@
 
 import express from 'express';
+import cors from 'cors';
 import 'dotenv/config';
 
 
@@ -10,6 +11,7 @@ import saved from './routes/savednums.js';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
@@ -17,6 +19,9 @@ app.use(express.json());
 app.use('/', home);
 app.use('/providers', providers);
 app.use('/saved', saved);
+app.get('/backend/test', (req,res) => {
+  res.send("Backend connectivity test");
+})
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });

@@ -1,9 +1,4 @@
-asgiref==3.12.1
-Django==6.1
-django-cors-headers==4.9.0
-djangorestframework==3.18.0
-djangorestframework_simplejwt==5.5.1
-greenlet==3.5.4
+
 numpy==2.5.1
 pandas==3.0.5
 PyJWT==2.13.0
